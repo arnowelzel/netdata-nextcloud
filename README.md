@@ -1,4 +1,4 @@
-# Nexctloud netdata Plugin
+# Nextcloud netdata Plugin
 
 This is a [netdata](https://github.com/netdata/netdata/) plugin that polls
 the number of active users from a Nexctloud server.
