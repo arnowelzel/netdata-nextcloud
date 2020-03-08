@@ -1,6 +1,6 @@
 # Nexctloud netdata Plugin
 
-This is a [netdata](https://github.com/firehol/netdata/) plugin that polls
+This is a [netdata](https://github.com/netdata/netdata/) plugin that polls
 the number of active users from a Nexctloud server.
 
 This program is free software: you can redistribute it and/or modify
