@@ -23,7 +23,7 @@ With your default netdata installation copy the nextcloud.chart.py script to
 `/etc/netdata/python.d/`. The location of these directories may vary depending
 on your distribution. Read your given release of netdata for more information.
 
-Log in as aminidstator in Nextcloud and create a new app password for netdata.
+Log in as aministrator in Nextcloud and create a new app password for netdata.
 
 Edit the config file to set the Nextcloud API URL, user name and app password.
 
