@@ -20,22 +20,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from bases.FrameworkServices.UrlService import UrlService
-import xml.etree.ElementTree as ElementTree
+from json import loads
 
 # Basic plugin settings for netdata.
 update_every = 5
 priority = 60000
 retries = 10
 
-ORDER = ['users']
+ORDER = ['users',
+         'files',
+         'storage',
+         'shares'
+        ]
 
 CHARTS = {
     'users': {
         'options': [None, 'Users active', 'users', 'Users', 'nextcloud.active_users', 'line'],
         'lines': [
-            ['connected_users5min', '5 min', 'absolute'],
-            ['connected_users1hour', '1 hour', 'absolute'],
-            ['connected_users24hours', '24 hours', 'absolute'],
+            ['num_users', 'total', 'absolute'],
+            ['last5minutes', '5 min', 'absolute'],
+            ['last1hour', '1 hour', 'absolute'],
+            ['last24hours', '24 hours', 'absolute'],
+        ]
+    },
+    'files': {
+        'options': [None, 'Files', 'files', 'Files', 'nextcloud.files', 'line'],
+        'lines': [
+            ['num_files', 'files', 'absolute'],
+        ]
+    },
+    'storage': {
+        'options': [None, 'Storage', 'storage', 'Storage', 'nextcloud.storage', 'stacked'],
+        'lines': [
+            ['num_storages_local', 'storages local', 'absolute'],
+            ['num_storages_home', 'storages home', 'absolute'],
+            ['num_storages_other', 'storages other', 'absolute'],
+        ]
+    },
+    'shares': {
+        'options': [None, 'Shares', 'shares', 'Shares', 'nextcloud.shares', 'line'],
+        'lines': [
+            ['num_shares', 'shares', 'absolute'],
+            ['num_shares_user', 'shares user', 'absolute'],
+            ['num_shares_groups', 'shares groups', 'absolute'],
+            ['num_shares_link', 'shares link', 'absolute'],
+            ['num_shares_link_no_password', 'shares link no password', 'absolute'],
+            ['num_fed_shares_sent', 'fed shares sent', 'absolute'],
+            ['num_fed_shares_received', 'fed shares received', 'absolute'],
         ]
     },
 }
@@ -47,7 +78,7 @@ class Service(UrlService):
         self.definitions = CHARTS
         self.user = self.configuration.get('user') 
         self.password = self.configuration.get('pass')
-        self.url = self.configuration.get('url', 'http://localhost/ocs/v2.php/apps/serverinfo/api/v1/info')
+        self.url = self.configuration.get('url', 'http://localhost')+'/ocs/v2.php/apps/serverinfo/api/v1/info?format=json'
 
     def check(self):
         self._manager = self._build_manager()
@@ -60,17 +91,20 @@ class Service(UrlService):
         return True
         
     def _get_data(self):
-        data = dict()
         raw_data = self._get_raw_data()
         
         if not raw_data:
             return None
-        tree = ElementTree.fromstring(raw_data);
-        user5min = tree.find(".//activeUsers/last5minutes")
-        user1hour = tree.find(".//activeUsers/last1hour")
-        user24hours = tree.find(".//activeUsers/last24hours")
-        data['connected_users5min'] = user5min.text
-        data['connected_users1hour'] = user1hour.text
-        data['connected_users24hours'] = user24hours.text
-        
-        return data or None
+
+        try:
+            j=loads(raw_data)
+            data=j['ocs']['data']['activeUsers']
+            data.update(j['ocs']['data']['nextcloud']['storage'])
+            data.update(j['ocs']['data']['nextcloud']['shares'])
+            return data
+        except ValueError:
+            self.error('received data is not in json format')
+        except KeyError:
+            self.error('missing key in received data')
+
+        return None
