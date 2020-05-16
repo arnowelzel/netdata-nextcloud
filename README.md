@@ -1,7 +1,7 @@
 # Nextcloud netdata Plugin
 
 This is a [netdata](https://github.com/netdata/netdata/) plugin that polls
-the number of active users from a Nexctloud server.
+a number of metrics from a Nexctloud server.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@ Log in as aministrator in Nextcloud and create a new app password for netdata.
 
 Edit the config file to set the Nextcloud API URL, user name and app password.
 
+Please note: beginning with v0.2 the configuration only needs the hostname and not
+the full URL to the monitoring API!
+
 Restart netdata to activate the plugin after you have made these changes.
 
 To disable the Nextcloud plugin, edit `/etc/netdata/python.d.conf` and add
@@ -34,4 +37,5 @@ To disable the Nextcloud plugin, edit `/etc/netdata/python.d.conf` and add
 
 ## Version History
 
+- v0.2 - More metrics, using JSON instead of XML, changed configuration (thanks to Luca Olivetti)
 - v0.1 - Initial release
