@@ -32,8 +32,9 @@ retries = 10
 ORDER = ['users',
          'files',
          'storage',
-         'shares'
-        ]
+         'shares',
+         'apps'
+         ]
 
 CHARTS = {
     'users': {
@@ -71,16 +72,25 @@ CHARTS = {
             ['num_fed_shares_received', 'fed shares received', 'absolute'],
         ]
     },
+    'apps': {
+        'options': [None, 'Apps', 'apps', 'Apps', 'nextcloud.apps', 'line'],
+        'lines': [
+            ['num_installed', 'num_installed', 'absolute'],
+            ['num_updates_available', 'num_updates_available', 'absolute'],
+        ]
+    }
 }
+
 
 class Service(UrlService):
     def __init__(self, configuration=None, name=None):
         UrlService.__init__(self, configuration=configuration, name=name)
         self.order = ORDER
         self.definitions = CHARTS
-        self.user = self.configuration.get('user') 
+        self.user = self.configuration.get('user')
         self.password = self.configuration.get('pass')
-        self.url = self.configuration.get('url', 'http://localhost')+'/ocs/v2.php/apps/serverinfo/api/v1/info?format=json'
+        self.url = self.configuration.get(
+            'url', 'http://localhost')+'/ocs/v2.php/apps/serverinfo/api/v1/info?format=json'
 
     def check(self):
         self._manager = self._build_manager()
@@ -91,18 +101,19 @@ class Service(UrlService):
             return None
 
         return True
-        
+
     def _get_data(self):
         raw_data = self._get_raw_data()
-        
+
         if not raw_data:
             return None
 
         try:
-            j=loads(raw_data)
-            data=j['ocs']['data']['activeUsers']
+            j = loads(raw_data)
+            data = j['ocs']['data']['activeUsers']
             data.update(j['ocs']['data']['nextcloud']['storage'])
             data.update(j['ocs']['data']['nextcloud']['shares'])
+            data.update(j['ocs']['data']['nextcloud']['system']['apps'])
             return data
         except ValueError:
             self.error('received data is not in json format')
