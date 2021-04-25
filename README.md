@@ -24,6 +24,7 @@ With your default netdata installation copy the nextcloud.chart.py script to
 on your distribution. Read your given release of netdata for more information.
 
 Log in as aministrator in Nextcloud and create a new app password for netdata.
+Note: The [metadata](https://apps.nextcloud.com/apps/metadata) plugin must be installed and activated in Nextcloud.
 
 Edit the config file to set the Nextcloud API URL, user name and app password.
 
