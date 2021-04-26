@@ -35,6 +35,13 @@ Restart netdata to activate the plugin after you have made these changes.
 To disable the Nextcloud plugin, edit `/etc/netdata/python.d.conf` and add
 `nextcloud: no`.
 
+## Debugging
+
+If problems occur, the plugin execution can be debugged as follows:
+
+1. `sudo su -s /bin/bash netdata`
+2. `/usr/libexec/netdata/plugins.d/python.d.plugin nextcloud debug trace`
+
 ## Version History
 
 - v0.2 - More metrics, using JSON instead of XML, changed configuration (thanks to Luca Olivetti)
