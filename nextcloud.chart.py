@@ -3,9 +3,9 @@
 """
 NetData plugin for active users on Nextcloud servers.
 
-Copyright (C) 2020 Arno Welzel
+Copyright (C) 2020-2021 Arno Welzel
 
-With contributions by Luca Olivetti
+With contributions by Luca Olivetti and others
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
