@@ -18,8 +18,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
 
 ## Installation
 
-With your default netdata installation copy the nextcloud.chart.py script to
-`/usr/libexec/netdata/python.d/` and the nextcloud.conf config file to
+With your default netdata installation copy the `nextcloud.chart.py` script to
+`/usr/libexec/netdata/python.d/` and the `nextcloud.conf` config file to
 `/etc/netdata/python.d/`. The location of these directories may vary depending
 on your distribution. Read your given release of netdata for more information.
 
@@ -28,7 +28,8 @@ Optional: Copy health configuration `health.d/netdata.conf` to `/etc/netdata/hea
 Log in as aministrator in Nextcloud and create a new app password for netdata.
 Note: The [metadata](https://apps.nextcloud.com/apps/metadata) plugin must be installed and activated in Nextcloud.
 
-Edit the config file to set the Nextcloud API URL, user name and app password.
+Edit the config file `/etc/netdata/python.d/nextcloud.conf` to set the Nextcloud API URL,
+user name and app password.
 
 Please note: beginning with v0.2 the configuration only needs the hostname and not
 the full URL to the monitoring API!
