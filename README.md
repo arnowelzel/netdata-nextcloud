@@ -23,7 +23,7 @@ With your default netdata installation copy the `nextcloud.chart.py` script to
 `/etc/netdata/python.d/`. The location of these directories may vary depending
 on your distribution. Read your given release of netdata for more information.
 
-Optional: Copy health configuration `health.d/netdata.conf` to `/etc/netdata/health.d/` to enable warnings if there are pending app updates.
+Optional: Copy health configuration `health.d/nextcloud.conf` to `/etc/netdata/health.d/` to enable warnings if there are pending app updates.
 
 Log in as aministrator in Nextcloud and create a new app password for netdata.
 Note: The [metadata](https://apps.nextcloud.com/apps/metadata) plugin must be installed and activated in Nextcloud.
