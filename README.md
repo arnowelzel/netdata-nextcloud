@@ -25,14 +25,15 @@ on your distribution. Read your given release of netdata for more information.
 
 Optional: Copy health configuration `health.d/nextcloud.conf` to `/etc/netdata/health.d/` to enable warnings if there are pending app updates.
 
-Log in as aministrator in Nextcloud and create a new app password for netdata.
-Note: The [metadata](https://apps.nextcloud.com/apps/metadata) plugin must be installed and activated in Nextcloud.
+To set up proper credentials, either:
+- Log in as administrator in Nextcloud Web GUI and create a new app password for netdata, OR
+- use Nextcloud CLI `occ config:app:set serverinfo token --value yourtoken` to generate dedicated token
 
 Edit the config file `/etc/netdata/python.d/nextcloud.conf` to set the Nextcloud API URL,
-user name and app password.
+`user`+`pass` or the `token`. Note: both `user`+`pass` and token cannot be configured simultaneously.
 
-Please note: beginning with v0.2 the configuration only needs the hostname and not
-the full URL to the monitoring API!
+Please note: beginning with v0.2 the configuration only needs the base url (i.e. `https://your-hostname`)
+and not the full URL to the monitoring API!
 
 Restart netdata to activate the plugin after you have made these changes.
 

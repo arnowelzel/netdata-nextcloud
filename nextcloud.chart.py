@@ -89,6 +89,10 @@ class Service(UrlService):
         self.definitions = CHARTS
         self.user = self.configuration.get('user')
         self.password = self.configuration.get('pass')
+        if self.configuration.get('token'):
+            if self.user or self.password:
+                raise BaseException("Cannot use token with user/password")
+            self.header = {"NC-Token": self.configuration.get('token')}
         self.url = self.configuration.get(
             'url', 'http://localhost')+'/ocs/v2.php/apps/serverinfo/api/v1/info?format=json'
 
