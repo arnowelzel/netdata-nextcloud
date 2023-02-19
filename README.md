@@ -32,8 +32,8 @@ To set up proper credentials, either:
 Edit the config file `/etc/netdata/python.d/nextcloud.conf` to set the Nextcloud API URL,
 `user`+`pass` or the `token`. Note: both `user`+`pass` and token cannot be configured simultaneously.
 
-Please note: beginning with v0.2 the configuration only needs the hostname and not
-the full URL to the monitoring API!
+Please note: beginning with v0.2 the configuration only needs the base url (i.e. `https://your-hostname`)
+and not the full URL to the monitoring API!
 
 Restart netdata to activate the plugin after you have made these changes.
 
